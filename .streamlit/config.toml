@@ -1,0 +1,6 @@
+[server]
+port = 8080
+runOnSave = true
+
+[browser]
+gatherUsageStats = false
