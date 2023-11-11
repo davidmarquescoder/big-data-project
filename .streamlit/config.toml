@@ -1,3 +1,6 @@
+[theme]
+base="dark"
+
 [server]
 port = 8080
 runOnSave = true
