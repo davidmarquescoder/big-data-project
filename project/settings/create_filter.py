@@ -10,7 +10,4 @@ class Component:
             default = dataframe[coluna].unique()
             )
 
-        self.dataframe = dataframe.query(f'{coluna} == {filter}')
-    
-    def ReturnDataframe(self):
-        return self.dataframe
+        return filter
