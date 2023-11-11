@@ -1,3 +1,3 @@
 from pathlib import Path
 
-file_path = Path(__file__).parent.parent / 'data'
+file_path = Path(__file__).parent.parent / 'data' / 'exportacao_full.csv'
