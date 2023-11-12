@@ -37,3 +37,17 @@ def file_path_3():
     file_path = Path(__file__).parent.parent / 'data' / sub_pasta / file_name
 
     return file_path
+
+def file_path_4(table):
+    sub_pasta = 'Indices-de-pobreza-brasil'
+
+    file_name_1 = 'indices_pobreza_consolidado_anual.csv'
+    file_name_2 = 'indices_pobreza_consolidado.csv'
+
+    match table:
+        case 1:
+            file_path = Path(__file__).parent.parent / 'data' / sub_pasta / file_name_1
+        case 2:
+            file_path = Path(__file__).parent.parent / 'data' / sub_pasta / file_name_2
+        
+    return file_path
