@@ -43,10 +43,10 @@ col_table_2.dataframe(dataframe_2)
 col_checks_1, col_checks_2, col_checks_3 = st.columns([0.1, 0.1, 0.21])
 col_charts_1, col_charts_2 = st.columns(2)
 
-check_1 = col_checks_2.checkbox('Exibir Marcadores',
-                                help='Quando ativada, esta opção adiciona marcadores aos gráficos de linhas.')
-check_2 = col_checks_1.checkbox('Exibir Gráficos Anuais',
+check_1 = col_checks_1.checkbox('Exibir Gráficos Anuais',
                                 help='Quando ativada, esta opção exibe os gráficos dos dados anuais na tela.')
+check_2 = col_checks_2.checkbox('Exibir Marcadores',
+                                help='Quando ativada, esta opção adiciona marcadores aos gráficos de linhas.')
 check_3 = col_checks_3.checkbox('Mostrar Percentual',
                                 help='Quando ativada, esta opção exibe os percentuais sobre as barras nos gráficos de barras.')
 
@@ -54,7 +54,7 @@ fig_1 = px.line(
     dataframe_1,
     x='referencia',
     y='pobreza',
-    markers=check_1,
+    markers=check_2,
     title='Pessoas em Situação de Pobreza no Brasil (2012-2022)',
     labels={'referencia': 'Ano', 'pobreza': 'Nº de Pessoas em Situação de Pobreza'}
     )
@@ -63,7 +63,7 @@ fig_2 = px.line(
     dataframe_1,
     x='referencia',
     y='extrema_pobreza',
-    markers=check_1,
+    markers=check_2,
     title='Pessoas em Situação de Extrema Pobreza no Brasil (2012-2022)',
     labels={'referencia': 'Ano', 'extrema_pobreza': 'Nº de Pessoas em Situação de Extrema Pobreza'}
     )
@@ -72,7 +72,7 @@ fig_3 = px.line(
     dataframe_1,
     x='referencia',
     y='total',
-    markers=check_1,
+    markers=check_2,
     title='Pessoas em Situação de Vulnerabilidade (2012-2022)',
     labels={'referencia': 'Ano', 'total': 'Nº Total de Pessoas em Situação de Vulnerabilidade'}
     )
@@ -81,7 +81,7 @@ fig_4 = px.line(
     dataframe_1,
     x='referencia',
     y='populacao_estimada',
-    markers=check_1,
+    markers=check_2,
     title='População Estimada (2012-2022)',
     labels={'referencia': 'Ano', 'populacao_estimada': 'Estimativa populacional'},
     )
@@ -122,7 +122,7 @@ fig_6.update_layout(
         showlegend=False,
         )
 
-if check_2 == True:
+if check_1 == True:
     col_charts_1.plotly_chart(fig_1)
     col_charts_2.plotly_chart(fig_2)
     col_charts_1.plotly_chart(fig_3)
