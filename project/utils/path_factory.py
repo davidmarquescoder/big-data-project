@@ -51,3 +51,10 @@ def file_path_4(table):
             file_path = Path(__file__).parent.parent / 'data' / sub_pasta / file_name_2
         
     return file_path
+
+def file_path_5():
+    sub_pasta = 'Suicidio'
+    file_name = 'Suicidio_2014_2018.csv'
+    file_path = Path(__file__).parent.parent / 'data' / sub_pasta / file_name
+
+    return file_path
