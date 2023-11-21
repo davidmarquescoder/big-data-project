@@ -11,7 +11,7 @@ from settings import Component
 component = Component()
 
 # Page config
-PageSettings('DashBoard', '💰')
+PageSettings('Suicídios', '☠')
 
 # Formatação
 formating = FormatingTable()
@@ -64,11 +64,14 @@ if check_box_4 == True:
 
 
 # Mostrando tabela na tela ou ocultando
+col_itens_1, col_itens_2 = st.columns([0.022,0.2])
 check_box_ocult = component.CreateCheckBox(
     'Ocultar tabela',
     'Selecione essa opções se dejar ocultar a tabela',
-    st
+    col_itens_1
     )
+
+col_itens_2.markdown('[Descrição da Tabela](http://localhost:8080/Descrição_Tabela_de_Suicídios)')
 
 if check_box_ocult == False:
     # Formatando a coluna "Ano" da tabela
