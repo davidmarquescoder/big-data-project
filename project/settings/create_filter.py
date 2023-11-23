@@ -12,13 +12,21 @@ class Component:
 
         return filter
     
-    def CreateFilterInPage(self, id, label, dataframe, coluna):
-        filter = st.multiselect(
-            key = id,
-            label = label,
-            options = dataframe[coluna].unique(),
-            default = dataframe[coluna].unique()
-            )
+    def CreateMultiSelect(self, id, label, dataframe, coluna, default):
+        
+        if default == True:
+            filter = st.multiselect(
+                key = id,
+                label = label,
+                options = dataframe[coluna].unique(),
+                default = dataframe[coluna].unique()
+                )
+        if default == False:
+            filter = st.multiselect(
+                key = id,
+                label = label,
+                options = dataframe[coluna].unique(),
+                )
 
         return filter
     

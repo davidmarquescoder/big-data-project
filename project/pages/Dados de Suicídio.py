@@ -16,8 +16,13 @@ PageSettings('Suicídios', '☠')
 # Formatação
 formating = FormatingTable()
 
+st.title('Análise Detalhada dos Suicídios no Brasil de 2014 a 2018')
+
 # DataFrame
 df = pd.read_csv(file_path_5(), sep=',', encoding='latin-1')
+
+# Colunas métricas
+col_met_1, col_met_2, col_met_3, col_met_4 = st.columns(4)
 
 # Filtros Globais
 col_check_1, col_check_2, col_check_3, col_check_4 = st.columns(4)
@@ -77,23 +82,110 @@ if check_box_ocult == False:
     # Formatando a coluna "Ano" da tabela
     formating.YearToString(df, 'ano')
 
-    st.title(
-        'Uma Análise Detalhada dos Suicídios no Brasil de 2014 a 2018'
-        )
     st.dataframe(df, use_container_width=True)
 
+# Métricas
+results = df.shape[0]
+media_idades = df['idade'].mean()
+
+contagem_assistmed = df['ASSISTMED'].value_counts()
+quantidade_sim = contagem_assistmed.get('Sim', 0)
+quantidade_nao = contagem_assistmed.get('Não', 0)
+
+
+col_met_1.metric('Resultados', f'{results} Casos')
+col_met_2.metric('Média das idades', f'{media_idades:.0f} Anos')
+col_met_3.metric('Recebeu Assistência Médica', f'{quantidade_sim}')
+col_met_4.metric('Não Recebeu Assistência Médica', f'{quantidade_nao}')
+
 ################### Gráficos ###################
+col_chart_1, col_chart_2 = st.columns(2)
+
+# Distribuição de Suicídios por Raça/Cor (2014-2018)
 df['RACACOR'].fillna('Não Identificado', inplace=True)
 count_by_race = df['RACACOR'].value_counts().reset_index()
 
-fig = px.bar(
+fig_1 = px.bar(
     count_by_race,
     y = 'count',
     x = 'RACACOR',
     title = 'Distribuição de Suicídios por Raça/Cor (2014-2018)',
     labels = {'count': '', 'RACACOR': ''},
     color = 'RACACOR',
-    color_discrete_sequence = px.colors.sequential.Peach_r,
+    color_discrete_sequence = px.colors.sequential.Rainbow_r,
+    height=700,
     )
 
-st.plotly_chart(fig)
+# Evolução Anual de Suicídios por Raça/Cor no Brasil (2014-2018)
+df_grouped = df.groupby(['ano', 'RACACOR']).size().reset_index(name='QUANTIDADE')
+
+fig_2 = px.line(
+    df_grouped,
+    x='ano',
+    y='QUANTIDADE',
+    color='RACACOR',
+    markers=True,
+    title='Evolução Anual de Suicídios por Raça/Cor no Brasil (2014-2018)',
+    color_discrete_sequence = px.colors.sequential.Rainbow_r,
+    height=700,
+    )
+
+fig_2.update_layout(
+    xaxis_title='',
+    yaxis_title='',
+    legend_title='Legenda'
+    )
+
+# Quantidade Total de Suicídios por Mês no Brasil (2014-2018)
+
+# Agrupando por mês e contando o número total de ocorrências
+df_grouped = df.groupby('mes').size().reset_index(name='QUANTIDADE_TOTAL')
+
+# Criando o gráfico de barras
+fig_3 = px.line(
+    df_grouped,
+    x='mes',
+    y='QUANTIDADE_TOTAL',
+    markers=True,
+    title='Quantidade Total de Suicídios por Mês no Brasil (2014-2018)',
+    labels={'QUANTIDADE_TOTAL': 'Quantidade Total', 'mes': 'Mês'},
+    height=600
+    )
+
+# Personalizando o layout do gráfico
+fig_3.update_layout(
+    xaxis_title='Mês',
+    yaxis_title=''
+    )
+
+
+# Exibição
+col_chart_1.plotly_chart(fig_1, use_container_width=True)
+col_chart_2.plotly_chart(fig_2, use_container_width=True)
+st.plotly_chart(fig_3, use_container_width=True)
+
+
+check_box_municipio = component.CreateCheckBox(
+    'Habilitar Municípios',
+    'Selecione essa opções se dejar o filtro abaixo.',
+    st
+    )
+
+municipio = component.CreateMultiSelect(1, 'Filtre um Município', df, 'CODMUNRES', False)
+if check_box_municipio == True:
+    df = df.query(f'CODMUNRES == @municipio')
+
+# Agrupando por comunidade e contando o número de suicídios
+df_grouped = df.groupby('CODMUNRES').size().reset_index(name='QUANTIDADE')
+
+# Criando o gráfico de barras
+fig_4 = px.bar(
+    df_grouped,
+    x='CODMUNRES',
+    y='QUANTIDADE',
+    title='Número de Suicídios por Município',
+    labels={'QUANTIDADE': 'Número de Suicídios', 'CODMUNRES': 'Município'},
+    height=600
+    )
+
+st.plotly_chart(fig_4, use_container_width=True)
