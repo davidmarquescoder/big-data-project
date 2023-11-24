@@ -189,3 +189,35 @@ fig_4 = px.bar(
     )
 
 st.plotly_chart(fig_4, use_container_width=True)
+
+char_col_1, char_col_2 = st.columns(2)
+
+df['OCUP'] = df['OCUP'].replace('0', 'Não identificado')
+
+contagem_ocup = df['OCUP'].value_counts().reset_index()
+contagem_ocup.columns = ['Ocupação', 'Número de Suicídios']
+
+top_ocup = contagem_ocup.head(10)
+
+fig_5 = px.bar(
+    top_ocup,
+    x='Número de Suicídios',
+    y='Ocupação',
+    orientation='h',
+    title='Top 10 Ocupações com Maiores Índices de Suicídio',
+    labels={'Número de Suicídios': 'Número de Suicídios', 'Ocupação': 'Ocupação'},
+    height=700
+    )
+
+
+contagem_estado = df['estado'].value_counts().reset_index()
+contagem_estado.columns = ['Estado', 'Número de Suicídios']
+
+# Criar um gráfico de barras
+fig_6 = px.bar(contagem_estado, x='Estado', y='Número de Suicídios',
+             title='Índices de Suicídio por Estado',
+             labels={'Número de Suicídios': 'Número de Suicídios', 'Estado': 'Estado'}, height=700)
+
+
+char_col_1.plotly_chart(fig_5, use_container_width=True)
+char_col_2.plotly_chart(fig_6, use_container_width=True)
