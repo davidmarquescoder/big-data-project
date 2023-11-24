@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+from pathlib import Path
 
 from utils import file_path_5
 from settings import PageSettings
@@ -19,7 +20,10 @@ formating = FormatingTable()
 st.title('Análise Detalhada dos Suicídios no Brasil de 2014 a 2018')
 
 # DataFrame
-df = pd.read_csv(file_path_5(), sep=',', encoding='latin-1')
+sub_pasta = 'Suicidio'
+file_name = 'Suicidio_2014_2018.csv'
+file_path = Path(__file__).parent.parent / 'data' / sub_pasta / file_name
+df = pd.read_csv(file_path, sep=',', encoding='latin-1')
 
 # Colunas métricas
 col_met_1, col_met_2, col_met_3, col_met_4 = st.columns(4)
