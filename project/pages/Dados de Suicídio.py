@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.express as px
 import os
 
-from utils import file_path_5
+# from utils import file_path_5
 from settings import PageSettings
 from settings import FormatingTable
 from settings import Component
