@@ -1,5 +1,7 @@
 import streamlit as st
+from settings import PageSettings
 
+PageSettings('Home', '📊')
 
 st.markdown('''
 # Análise de Suicídios no Brasil
