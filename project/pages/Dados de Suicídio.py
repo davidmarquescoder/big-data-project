@@ -12,7 +12,7 @@ from settings import Component
 component = Component()
 
 # Page config
-PageSettings('Suicídios', '☠')
+PageSettings('Suicídios', '📊')
 
 # Formatação
 formating = FormatingTable()
